@@ -392,27 +392,27 @@ Do not try to write code that attempts the entire task at once, and verify at ea
 
 # Computer
 
-You may use the `computer` Python module to complete tasks:
+You may use the `interpreter` Python module to complete tasks:
 
 ```python
-computer.display.view() # Shows you what's on the screen, returns a `pil_image` `in case you need it (rarely). **You almost always want to do this first!**
+interpreter.interpreter.computer.display.view() # Shows you what's on the screen, returns a `pil_image` `in case you need it (rarely). **You almost always want to do this first!**
 
-computer.keyboard.hotkey(" ", "command") # Opens spotlight (very useful)
-computer.keyboard.write("hello")
+interpreter.interpreter.computer.keyboard.hotkey(" ", "command") # Opens spotlight (very useful)
+interpreter.interpreter.computer.keyboard.write("hello")
 
-computer.mouse.click("text onscreen") # This clicks on the UI element with that text. Use this **frequently** and get creative! To click a video, you could pass the *timestamp* (which is usually written on the thumbnail) into this.
-computer.mouse.move("open recent >") # This moves the mouse over the UI element with that text. Many dropdowns will disappear if you click them. You have to hover over items to reveal more.
-computer.mouse.click(x=500, y=500) # Use this very, very rarely. It's highly inaccurate
-computer.mouse.click(icon="gear icon") # Moves mouse to the icon with that description. Use this very often
+interpreter.interpreter.computer.mouse.click("text onscreen") # This clicks on the UI element with that text. Use this **frequently** and get creative! To click a video, you could pass the *timestamp* (which is usually written on the thumbnail) into this.
+interpreter.interpreter.computer.mouse.move("open recent >") # This moves the mouse over the UI element with that text. Many dropdowns will disappear if you click them. You have to hover over items to reveal more.
+interpreter.interpreter.computer.mouse.click(x=500, y=500) # Use this very, very rarely. It's highly inaccurate
+interpreter.interpreter.computer.mouse.click(icon="gear icon") # Moves mouse to the icon with that description. Use this very often
 
-computer.mouse.scroll(-10) # Scrolls down. If you don't find some text on screen that you expected to be there, you probably want to do this
-x, y = computer.display.center() # Get your bearings
+interpreter.interpreter.computer.mouse.scroll(-10) # Scrolls down. If you don't find some text on screen that you expected to be there, you probably want to do this
+x, y = interpreter.interpreter.computer.display.center() # Get your bearings
 
-computer.clipboard.view() # Returns contents of clipboard
-computer.os.get_selected_text() # Use frequently. If editing text, the user often wants this
+interpreter.interpreter.computer.clipboard.view() # Returns contents of clipboard
+interpreter.interpreter.computer.os.get_selected_text() # Use frequently. If editing text, the user often wants this
 ```
 
-For rare and complex mouse actions, consider using computer vision libraries on the `computer.display.view()` `pil_image` to produce a list of coordinates for the mouse to move/drag to.
+For rare and complex mouse actions, consider using computer vision libraries on the `interpreter.interpreter.computer.display.view()` `pil_image` to produce a list of coordinates for the mouse to move/drag to.
 
 If the user highlighted text in an editor, then asked you to modify it, they probably want you to `keyboard.write` over their version of the text.
 
@@ -432,7 +432,7 @@ Try multiple methods before saying the task is impossible. **You can do it!**
 
 # Critical Routine Procedure for Multi-Step Tasks
 
-Include `computer.display.view()` after a 2 second delay at the end of _every_ code block to verify your progress, then answer these questions in extreme detail:
+Include `interpreter.interpreter.computer.display.view()` after a 2 second delay at the end of _every_ code block to verify your progress, then answer these questions in extreme detail:
 
 1. Generally, what is happening on-screen?
 2. What is the active app?
@@ -446,7 +446,7 @@ Include `computer.display.view()` after a 2 second delay at the end of _every_ c
         if args.offline:
             # Icon finding does not work offline
             interpreter.system_message = interpreter.system_message.replace(
-                'computer.mouse.click(icon="gear icon") # Moves mouse to the icon with that description. Use this very often\n',
+                'interpreter.interpreter.computer.mouse.click(icon="gear icon") # Moves mouse to the icon with that description. Use this very often\n',
                 "",
             )
 
@@ -475,7 +475,7 @@ Include `computer.display.view()` after a 2 second delay at the end of _every_ c
 
             for pip_name in ["pip", "pip3"]:
                 command = f"{pip_name} install 'open-interpreter[os]'"
-
+                
                 interpreter.computer.run("shell", command, display=True)
 
                 got_em = True
@@ -543,7 +543,7 @@ Include `computer.display.view()` after a 2 second delay at the end of _every_ c
         # Give it access to the computer via Python
         interpreter.computer.run(
             "python",
-            "import time\nfrom interpreter import interpreter\ncomputer = interpreter.computer",  # We ask it to use time, so
+            "import time\nfrom interpreter import interpreter\ncomputer = interpreter.interpreter.computer",  # We ask it to use time, so
             display=args.verbose,
         )
 
