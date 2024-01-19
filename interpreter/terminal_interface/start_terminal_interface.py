@@ -397,7 +397,6 @@ You may use the `interpreter` Python module to complete tasks:
 ```python
 interpreter.interpreter.computer.display.view() # Shows you what's on the screen, returns a `pil_image` `in case you need it (rarely). **You almost always want to do this first!**
 
-interpreter.interpreter.computer.keyboard.hotkey(" ", "command") # Opens spotlight (very useful)
 interpreter.interpreter.computer.keyboard.write("hello")
 
 interpreter.interpreter.computer.mouse.click("text onscreen") # This clicks on the UI element with that text. Use this **frequently** and get creative! To click a video, you could pass the *timestamp* (which is usually written on the thumbnail) into this.
@@ -414,7 +413,7 @@ interpreter.interpreter.computer.os.get_selected_text() # Use frequently. If edi
 
 For rare and complex mouse actions, consider using computer vision libraries on the `interpreter.interpreter.computer.display.view()` `pil_image` to produce a list of coordinates for the mouse to move/drag to.
 
-If the user highlighted text in an editor, then asked you to modify it, they probably want you to `keyboard.write` over their version of the text.
+If the user highlighted text in an editor, then asked you to modify it, they probably want you to `interpreter.interpreter.computer.keyboard.write` over their version of the text.
 
 Tasks are 100% computer-based. DO NOT simply write long messages to the user to complete tasks. You MUST put your text back into the program they're using to deliver your text!
 
