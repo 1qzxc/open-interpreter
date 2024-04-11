@@ -25,6 +25,7 @@ from .utils.check_for_package import check_for_package
 from .utils.display_markdown_message import display_markdown_message
 from .utils.display_output import display_output
 from .utils.find_image_path import find_image_path
+from .utils.cli_input import cli_input
 
 # Add examples to the readline history
 examples = [
@@ -72,23 +73,16 @@ def terminal_interface(interpreter, message):
     voice_subprocess = None
 
     while True:
-        try:
-            if interactive:
-                ### This is the primary input for Open Interpreter.
-                message = input("> ").strip()
+        if interactive:
+            ### This is the primary input for Open Interpreter.
+            message = cli_input("> ").strip() if interpreter.multi_line else input("> ").strip()
 
-                try:
-                    # This lets users hit the up arrow key for past messages
-                    readline.add_history(message)
-                except:
-                    # If the user doesn't have readline (may be the case on windows), that's fine
-                    pass
-
-        except KeyboardInterrupt:
-            # Exit gracefully
-            # Disconnect from the computer interface
-            interpreter.computer.terminate()
-            break
+            try:
+                # This lets users hit the up arrow key for past messages
+                readline.add_history(message)
+            except:
+                # If the user doesn't have readline (may be the case on windows), that's fine
+                pass
 
         if isinstance(message, str):
             # This is for the terminal interface being used as a CLI — messages are strings.
@@ -367,12 +361,12 @@ def terminal_interface(interpreter, message):
                                 # (unless we figure out how to do this AFTER taking the screenshot)
                                 # otherwise it will try to click this notification!
 
-                                if action in [
-                                    "computer.screenshot()",
-                                    "computer.display.screenshot()",
-                                    "computer.display.view()",
-                                    "computer.view()",
-                                ]:
+                                if any(action.startswith(text) for text in [
+                                    "computer.screenshot",
+                                    "computer.display.screenshot",
+                                    "computer.display.view",
+                                    "computer.view"
+                                ]):
                                     description = "Viewing screen..."
                                 elif action == "computer.mouse.click()":
                                     description = "Clicking..."
